@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phone | Bulk Mailer</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #000d33 0%, #001a66 50%, #002f99 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animated background particles */
+.bg-animation {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.particle {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  animation: float 15s infinite;
+}
+
+.particle:nth-child(1) { width: 80px; height: 80px; left: 10%; animation-delay: 0s; }
+.particle:nth-child(2) { width: 60px; height: 60px; left: 80%; animation-delay: 2s; }
+.particle:nth-child(3) { width: 100px; height: 100px; left: 50%; animation-delay: 4s; }
+.particle:nth-child(4) { width: 40px; height: 40px; left: 30%; animation-delay: 6s; }
+.particle:nth-child(5) { width: 70px; height: 70px; left: 70%; animation-delay: 8s; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(100vh) scale(0); opacity: 0; }
+  50% { opacity: 0.3; }
+  100% { transform: translateY(-100vh) scale(1); opacity: 0; }
+}
+
+.container {
+  background: rgba(255, 255, 255, 0.98);
+  padding: 50px 45px;
+  border-radius: 25px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  width: 100%;
+  max-width: 480px;
+  position: relative;
+  z-index: 1;
+  animation: slideIn 0.6s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.logo-section {
+  text-align: center;
+  margin-bottom: 35px;
+  animation: fadeIn 0.8s ease-out 0.2s both;
+}
+
+.logo {
+  max-width: 180px;
+  height: auto;
+  filter: drop-shadow(0 4px 8px rgba(0, 13, 51, 0.2));
+  animation: logoFloat 3s ease-in-out infinite;
+}
+
+@keyframes logoFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 35px;
+  animation: fadeIn 0.8s ease-out 0.3s both;
+}
+
+.phone-icon-large {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+  background: linear-gradient(135deg, #000d33, #002f99);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  color: white;
+  animation: phoneRing 2s ease-in-out infinite;
+}
+
+@keyframes phoneRing {
+  0%, 100% { transform: rotate(0deg); }
+  10%, 30% { transform: rotate(-15deg); }
+  20%, 40% { transform: rotate(15deg); }
+  50% { transform: rotate(0deg); }
+}
+
+.form-header h2 {
+  color: #000d33;
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.form-header p {
+  color: #666;
+  font-size: 14px;
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 28px;
+  animation: slideInLeft 0.5s ease-out 0.4s both;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.country-code {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #000d33;
+  font-size: 16px;
+  font-weight: 600;
+  pointer-events: none;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.country-code i {
+  font-size: 20px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 16px 18px 16px 85px;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  background: #fff;
+  color: #333;
+  letter-spacing: 1px;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #000d33;
+  box-shadow: 0 0 0 4px rgba(0, 13, 51, 0.1);
+  background: #fff;
+}
+
+.input-group input::placeholder {
+  color: #999;
+  letter-spacing: normal;
+}
+
+.input-group input:hover {
+  border-color: #000d33;
+}
+
+.info-text {
+  font-size: 13px;
+  color: #666;
+  text-align: center;
+  margin-bottom: 25px;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  animation: fadeIn 0.8s ease-out 0.5s both;
+}
+
+.info-text i {
+  color: #000d33;
+  margin-right: 6px;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #000d33 0%, #001a66 50%, #002f99 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 0 8px 20px rgba(0, 13, 51, 0.3);
+  position: relative;
+  overflow: hidden;
+  animation: fadeIn 0.8s ease-out 0.6s both;
+}
+
+.submit-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.submit-btn:hover::before {
+  left: 100%;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(0, 13, 51, 0.4);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+}
+
+.submit-btn i {
+  margin-left: 8px;
+  transition: transform 0.3s ease;
+}
+
+.submit-btn:hover i {
+  transform: translateX(4px);
+}
+
+.progress-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 25px;
+  animation: fadeIn 0.8s ease-out 0.7s both;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  transition: all 0.3s ease;
+}
+
+.dot.active {
+  background: #000d33;
+  width: 30px;
+  border-radius: 5px;
+}
+
+.security-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+  padding: 12px;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  border-radius: 10px;
+  animation: fadeIn 0.8s ease-out 0.8s both;
+}
+
+.security-badge i {
+  color: #00c853;
+  font-size: 18px;
+}
+
+.security-badge span {
+  color: #444;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .container {
+    padding: 35px 25px;
+  }
+  
+  .logo {
+    max-width: 150px;
+  }
+  
+  .form-header h2 {
+    font-size: 22px;
+  }
+  
+  .phone-icon-large {
+    width: 70px;
+    height: 70px;
+    font-size: 30px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Background animation -->
+<div class="bg-animation">
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+</div>
+
+<div class="container">
+  <div class="logo-section">
+    <img src="{{ url_for('static', filename='ssitblue.png') }}" alt="Shanthi IT Solution" class="logo">
+  </div>
+
+  <div class="form-header">
+    <div class="phone-icon-large">
+      <i class="fas fa-mobile-alt"></i>
+    </div>
+    <h2>Verify Your Phone Number</h2>
+    <p>We'll send you a verification code</p>
+  </div>
+
+  <form action="/save_phone" method="POST">
+    <div class="input-group">
+      <div class="country-code">
+        <i class="fas fa-globe"></i>
+        <span>+91</span>
+      </div>
+      <input 
+        type="tel" 
+        name="phone" 
+        placeholder="Enter 10-digit mobile number" 
+        pattern="[0-9]{10}" 
+        maxlength="10"
+        required>
+    </div>
+
+    <div class="info-text">
+      <i class="fas fa-info-circle"></i>
+      We'll never share your phone number with anyone else
+    </div>
+
+    <button type="submit" class="submit-btn">
+      Continue
+      <i class="fas fa-arrow-right"></i>
+    </button>
+
+    <div class="security-badge">
+      <i class="fas fa-shield-alt"></i>
+      <span>Your information is secure and encrypted</span>
+    </div>
+
+    <div class="progress-dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot active"></div>
+    </div>
+  </form>
+</div>
+
+</body>
+</html>

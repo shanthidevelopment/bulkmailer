@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bulk Mail Sender | Shanthi IT Solution</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #000d33 0%, #001a66 50%, #002f99 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Animated background particles */
+.bg-animation {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+  top: 0;
+  left: 0;
+}
+
+.particle {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  animation: float 15s infinite;
+}
+
+.particle:nth-child(1) { width: 80px; height: 80px; left: 10%; animation-delay: 0s; }
+.particle:nth-child(2) { width: 60px; height: 60px; left: 80%; animation-delay: 2s; }
+.particle:nth-child(3) { width: 100px; height: 100px; left: 50%; animation-delay: 4s; }
+.particle:nth-child(4) { width: 40px; height: 40px; left: 30%; animation-delay: 6s; }
+.particle:nth-child(5) { width: 70px; height: 70px; left: 70%; animation-delay: 8s; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(100vh) scale(0); opacity: 0; }
+  50% { opacity: 0.3; }
+  100% { transform: translateY(-100vh) scale(1); opacity: 0; }
+}
+
+.container {
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 25px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  max-width: 800px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  animation: slideIn 0.6s ease-out;
+  overflow: hidden;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.header {
+  background: linear-gradient(135deg, #000d33 0%, #001a66 50%, #002f99 100%);
+  padding: 40px 30px;
+  text-align: center;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  animation: headerPulse 4s ease-in-out infinite;
+}
+
+@keyframes headerPulse {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.1) rotate(180deg); }
+}
+
+.logo-section {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 20px;
+}
+
+.logo {
+  max-width: 200px;
+  height: auto;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+  animation: logoFloat 3s ease-in-out infinite;
+}
+
+@keyframes logoFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.header-content {
+  position: relative;
+  z-index: 1;
+}
+
+.header h2 {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.header h2 i {
+  font-size: 32px;
+  animation: mailBounce 2s ease-in-out infinite;
+}
+
+@keyframes mailBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.header p {
+  font-size: 14px;
+  opacity: 0.95;
+}
+
+.form-container {
+  padding: 45px;
+}
+
+.form-group {
+  margin-bottom: 28px;
+  animation: fadeInUp 0.6s ease-out both;
+}
+
+.form-group:nth-child(1) { animation-delay: 0.1s; }
+.form-group:nth-child(2) { animation-delay: 0.2s; }
+.form-group:nth-child(3) { animation-delay: 0.3s; }
+.form-group:nth-child(4) { animation-delay: 0.4s; }
+.form-group:nth-child(5) { animation-delay: 0.5s; }
+.form-group:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #000d33;
+  font-weight: 600;
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+label i {
+  font-size: 18px;
+  color: #002f99;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  background: #fff;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="text"]:focus,
+textarea:focus {
+  outline: none;
+  border-color: #000d33;
+  box-shadow: 0 0 0 4px rgba(0, 13, 51, 0.1);
+}
+
+input[type="email"]:hover,
+input[type="password"]:hover,
+input[type="text"]:hover,
+textarea:hover {
+  border-color: #000d33;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 140px;
+  line-height: 1.6;
+}
+
+.file-input-wrapper {
+  position: relative;
+  overflow: hidden;
+  border: 2px dashed #e0e0e0;
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  background: #fafafa;
+}
+
+.file-input-wrapper:hover {
+  border-color: #000d33;
+  background: #f0f4ff;
+}
+
+.file-input-wrapper.has-file {
+  border-color: #00c853;
+  background: #f1f8f4;
+}
+
+input[type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.file-icon {
+  font-size: 40px;
+  color: #000d33;
+  margin-bottom: 10px;
+}
+
+.file-text {
+  color: #666;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.file-name {
+  color: #00c853;
+  font-weight: 600;
+  margin-top: 8px;
+  display: none;
+}
+
+.file-input-wrapper.has-file .file-name {
+  display: block;
+}
+
+.file-info {
+  font-size: 12px;
+  color: #666;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.file-info i {
+  color: #002f99;
+}
+
+.submit-btn-wrapper {
+  margin-top: 35px;
+  animation: fadeInUp 0.6s ease-out 0.7s both;
+}
+
+button[type="submit"] {
+  width: 100%;
+  background: linear-gradient(135deg, #000d33 0%, #001a66 50%, #002f99 100%);
+  color: white;
+  padding: 18px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 0 8px 25px rgba(0, 13, 51, 0.3);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+button[type="submit"]::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+button[type="submit"]:hover::before {
+  left: 100%;
+}
+
+button[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px rgba(0, 13, 51, 0.4);
+}
+
+button[type="submit"]:active {
+  transform: translateY(0);
+}
+
+button[type="submit"] i {
+  font-size: 18px;
+}
+
+.features-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-top: 30px;
+  padding-top: 30px;
+  border-top: 2px solid #f0f0f0;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.feature-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.feature-icon {
+  width: 45px;
+  height: 45px;
+  background: linear-gradient(135deg, #000d33, #002f99);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 20px;
+}
+
+.feature-text {
+  flex: 1;
+}
+
+.feature-text h4 {
+  font-size: 13px;
+  color: #000d33;
+  margin-bottom: 3px;
+}
+
+.feature-text p {
+  font-size: 11px;
+  color: #666;
+}
+
+/* Loading Overlay */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 13, 51, 0.95);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  flex-direction: column;
+}
+
+.loading-overlay.active {
+  display: flex;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.spinner {
+  width: 80px;
+  height: 80px;
+  border: 6px solid rgba(255, 255, 255, 0.2);
+  border-top: 6px solid #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.loading-text {
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 25px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.loading-subtext {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .form-container {
+    padding: 30px 25px;
+  }
+
+  .header {
+    padding: 30px 20px;
+  }
+
+  .header h2 {
+    font-size: 24px;
+  }
+
+  .logo {
+    max-width: 160px;
+  }
+
+  .features-strip {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Background animation -->
+<div class="bg-animation">
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+</div>
+
+<div class="container">
+  <div class="header">
+    <div class="logo-section">
+      <img src="{{ url_for('static', filename='ssitwhite.png') }}" alt="Shanthi IT Solution" class="logo">
+    </div>
+    <div class="header-content">
+      <h2>
+        <i class="fas fa-envlope-open-text"></i>
+        Bulk Mail Sender
+      </h2>
+      <p>Send personalized emails to multiple recipients with ease</p>
+    </div>
+  </div>
+
+  <div class="form-container">
+    <form action="/send" method="POST" enctype="multipart/form-data" id="mailForm">
+      
+      <div class="form-group">
+        <label for="sender">
+          <i class="fas fa-at"></i>
+          Sender Email Address
+        </label>
+        <div class="input-wrapper">
+          <input type="email" id="sender" name="sender" placeholder="your.email@gmail.com" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">
+          <i class="fas fa-key"></i>
+          App Password
+        </label>
+        <div class="input-wrapper">
+          <input type="password" id="password" name="password" placeholder="Enter your app password" required>
+        </div>
+        <div class="file-info">
+          <i class="fas fa-info-circle"></i>
+          Generate from Google Account Settings → Security → App Passwords
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="subject">
+          <i class="fas fa-heaing"></i>
+          Email Subject
+        </label>
+        <div class="input-wrapper">
+          <input type="text" id="subject" name="subject" placeholder="Enter email subject" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="body">
+          <i class="fas fa-edit"></i>
+          Email Content (HTML)
+        </label>
+        <textarea id="body" name="body" placeholder="Use HTML tags like <h3>, <p>, <ul>, <li> for formatting..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="attachment">
+          <i class="fas fa-paperclip"></i>
+          Attach Files (Optional)
+        </label>
+        <div class="file-input-wrapper" id="attachmentWrapper">
+          <input type="file" id="attachment" name="attachment" multiple>
+          <i class="fas fa-cloud-upload-alt file-icon"></i>
+          <div class="file-text">Click to upload or drag files here</div>
+          <div class="file-name" id="attachmentName"></div>
+        </div>
+        <div class="file-info">
+          <i class="fas fa-check-circle"></i>
+          You can attach multiple images or documents
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="excel">
+          <i class="fas fa-file-excel"></i>
+          Upload Recipient List (Excel)
+        </label>
+        <div class="file-input-wrapper" id="excelWrapper">
+          <input type="file" id="excel" name="excel" accept=".xlsx,.xls" required>
+          <i class="fas fa-file-excel file-icon"></i>
+          <div class="file-text">Click to upload Excel file</div>
+          <div class="file-name" id="excelName"></div>
+        </div>
+        <div class="file-info">
+          <i class="fas fa-exclamation-circle"></i>
+          Excel file must contain "mailList" column with email addresses
+        </div>
+      </div>
+
+      <div class="submit-btn-wrapper">
+        <button type="submit">
+          <i class="fas fa-paper-plane"></i>
+          Send Bulk Emails
+        </button>
+      </div>
+
+      <div class="features-strip">
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fas fa-bolt"></i>
+          </div>
+          <div class="feature-text">
+            <h4>Fast Delivery</h4>
+            <p>Quick processing</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <div class="feature-text">
+            <h4>Secure</h4>
+            <p>Encrypted connection</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <div class="feature-text">
+            <h4>Bulk Send</h4>
+            <p>Multiple recipients</p>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner"></div>
+  <div class="loading-text">Sending Emails...</div>
+  <div class="loading-subtext">Please wait while we process your request</div>
+</div>
+
+<script>
+  // File upload handlers
+  const attachmentInput = document.getElementById('attachment');
+  const attachmentWrapper = document.getElementById('attachmentWrapper');
+  const attachmentName = document.getElementById('attachmentName');
+
+  attachmentInput.addEventListener('change', function() {
+    if (this.files.length > 0) {
+      attachmentWrapper.classList.add('has-file');
+      const fileNames = Array.from(this.files).map(f => f.name).join(', ');
+      attachmentName.textContent = `✓ ${this.files.length} file(s) selected: ${fileNames}`;
+    } else {
+      attachmentWrapper.classList.remove('has-file');
+      attachmentName.textContent = '';
+    }
+  });
+
+  const excelInput = document.getElementById('excel');
+  const excelWrapper = document.getElementById('excelWrapper');
+  const excelName = document.getElementById('excelName');
+
+  excelInput.addEventListener('change', function() {
+    if (this.files.length > 0) {
+      excelWrapper.classList.add('has-file');
+      excelName.textContent = `✓ ${this.files[0].name}`;
+    } else {
+      excelWrapper.classList.remove('has-file');
+      excelName.textContent = '';
+    }
+  });
+
+  // Form submission with loading overlay
+  const form = document.getElementById('mailForm');
+  const loadingOverlay = document.getElementById('loadingOverlay');
+
+  form.addEventListener('submit', function() {
+    loadingOverlay.classList.add('active');
+  });
+</script>
+
+</body>
+</html>
